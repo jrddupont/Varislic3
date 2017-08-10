@@ -161,7 +161,7 @@ public class VariSlic3 {
 					 * one, two, or more other ranges in the table. Each range has a precedence and if we insert a range 
 					 * it could be below one range and above another.
 					 * 
-					 * For example(the format is [min(prec)max]):			[0(1)5][5(2)12][12(5)18][18(3)23][23(1)30][30(2)45]
+					 * For example(the format is [min(prec)max]):	[0(1)5][5(2)12][12(5)18][18(3)23][23(1)30][30(2)45]
 					 * And we insert [7(4)25] then the array will become	[0(1)5][5(2)7] [7(4)12] [12(5)18][18(4)25][25(1)30][30(2)45]
 					 * 
 					 * My general strategy is to start with the first and last range that intersect the range we are inserting
