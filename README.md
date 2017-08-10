@@ -3,7 +3,7 @@ A simple program that scans a STL file and determines what each region's layer h
 Basic usage: "java -jar varislic3.jar -file fox.stl"
 or if you want a larger max layer size: "java -jar varislic3.jar -file fox.stl -max 0.4"
 
-The name is a combination of Slic3r and Autodesk's Varislice
+The name is a combination of Slic3r and Autodesk's Varislice (Although it doesn't use Varislice's algorithm, I just thought it had a nice ring to it)
 
 Examples:  
 Here is simple dome sliced at 0.3mm
