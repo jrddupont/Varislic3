@@ -16,3 +16,4 @@ Same dome but 4x as large to exaggerate details, before varislic3
 After varislic3
 ![After varislic3](http://i.imgur.com/pfcBZG4.png)
 
+Just as a note, this algorithm is not designed to produce a perfect print. It simply looks at the angels of each polygon and determins what that polygon should be printed at. It works best on organic, smooth surfaces without many pillars near each other (like a forest or a bunch of hills or buildings next to each other) and works less well on inorganic, sharp models. 
