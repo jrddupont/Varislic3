@@ -19,7 +19,7 @@ After varislic3
 
 The program will output a text file containing a table of the layer heights separated by tabs. There is no good way to paste data into Slic3r, so I've included an AutoHotKey script to type in the data. To use it, just place it in the same folder as 'output.txt' and run it. Click the top left cell in the table entry location in slic3r and press Ctrl-Shit-V.
 
-Just as a note, this algorithm is not designed to produce a perfect print. It simply looks at the angels of each polygon and determins what that polygon should be printed at. It works best on organic, smooth surfaces without many pillars near each other (like a forest or a bunch of hills or buildings next to each other) and works less well on inorganic, sharp models. 
+Just as a note, this algorithm is not designed to produce a perfect print. It simply looks at the angles of each polygon and determins what that polygon should be printed at. It works best on organic, smooth surfaces without many pillars near each other (like a forest or a bunch of hills or buildings next to each other) and works less well on inorganic, sharp models. 
 
 
 
