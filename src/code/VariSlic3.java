@@ -27,7 +27,7 @@ public class VariSlic3 {
 	static double stepSize = 0;
 	public static void main(String[] args) throws IOException{
 		
-		File file = null;
+		File file = null; 
 		if(inConsole()){
 			try{
 				HashMap<String, String> arguments = CLIArgumentParser.pareseCLI(args);

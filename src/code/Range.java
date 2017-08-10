@@ -28,7 +28,7 @@ public class Range {
 		this(r.start, r.end, r.layerHeight);
 	}
 	/**
-	 * Gets the size of the range
+	 * Gets the size of the range 
 	 * 
 	 * @return How large the range is.
 	 */

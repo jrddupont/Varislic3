@@ -16,7 +16,7 @@ public class CLIArgumentParser {
 		
 		HashMap<String, String> output = new HashMap<String, String>();
 		for(int i = 0; i < args.length; i += 2){
-			if(args[i].charAt(0) != '-'){
+			if(args[i].charAt(0) != '-'){ 
 				return null;
 			}
 			output.put(args[i].substring(1), args[i + 1]);
