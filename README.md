@@ -1,6 +1,7 @@
 A simple program that scans a STL file and determines what each region's layer height should be due to it's slope.
 
-Basic usage: "java -jar varislic3.jar fox.stl"
+Basic usage: "java -jar varislic3.jar -file fox.stl"
+or if you want a larger max layer size: "java -jar varislic3.jar -file fox.stl -max 0.4"
 
 The name is a combination of Slic3r and Autodesk's Varislice
 
