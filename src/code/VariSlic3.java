@@ -3,7 +3,6 @@ package code;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +25,6 @@ public class VariSlic3 {
 	static int numberOfSteps = 10;	// As an int
 	static boolean considerNegatives = true;	// Should consider overhangs in this calculation
 	static double stepSize = 0;
-	// min, max, steps, negatives, file
-	// Usage = varislic3 min-layer-height max-layer-height number-of-steps should-consider-negative-flag
 	public static void main(String[] args) throws IOException{
 		
 		File file = null;
@@ -258,6 +255,9 @@ public class VariSlic3 {
 		System.out.println("Table saved to 'output.txt'");
 	}
 	
+	/**
+	 * Simply prints a help page
+	 */
 	private static void printHelp() {
 		System.out.println("VariSlic3 is a program that automatically generates a table of layer heights that Slic3r accepts and saves the output to 'output.txt' in the same directory as the jar file ");
 		System.out.println("Usage:");
@@ -275,6 +275,15 @@ public class VariSlic3 {
 		System.out.println();
 	}
 
+	/**
+	 * Saves the ranges into a table separated by tabs
+	 * 
+	 * ╔═══════╦═════╦═════════════╗
+	 * ║ start ║ end ║ layerHeight ║
+	 * ╚═══════╩═════╩═════════════╝
+	 * 
+	 * @param ranges
+	 */
 	private static void saveRanges(ArrayList<Range> ranges) {
 		try{
 			FileWriter fw = new FileWriter("output.txt");
@@ -288,22 +297,25 @@ public class VariSlic3 {
 		}
 	}
 
-	static DecimalFormat df = new DecimalFormat("#.###");
-	private static void printRanges(ArrayList<Range> ranges) {
-		for(Range trange : ranges){
-				System.out.print("["+trange.start+"("+trange.layerHeight+")"+trange.end+"]");
-		}
-		System.out.println();
-	}
-	private static boolean inConsole(){
-		return System.console() != null;
+	/**
+	 * Gets the angle of a vector relative to a horizontal plane.
+	 * 
+	 * @param vector The normal of a triangle
+	 * @return The angle in radians of the normal
+	 */
+	private static double getAngle(Vec3d vector){
+		// 90 degrees means flat, lower layer height
+		// 0  degrees means vertical, higher layer height
+		return Math.asin(vector.x); // x is vertical for some reason
 	}
 	
-	// 90 degrees means flat, lower layer height
-	// 0  degrees means vertical, higher layer height
-	private static double getAngle(Vec3d vector){
-		return Math.asin(vector.x);
-	}
+	/**
+	 * Gets what layer height that the printer should print at for a given triangle (Polygon). If the "considerNegatives" flag is false,
+	 * it will return 0 causing the main loop to continue. Always returns between minLayerHeight and maxLayerHeight inclusive. 
+	 * 
+	 * @param triangle The triangle to check
+	 * @return 0 if it is a negative and 'considerNegatives' is false and a layer height otherwise
+	 */
 	private static double getLayerHeight(Triangle triangle){
 		double angle = getAngle(triangle.getNormal());
 		if(!considerNegatives && angle < 0){
@@ -315,6 +327,12 @@ public class VariSlic3 {
 		double layerHeight = minLayerHeight + (stepSize * (numberOfSteps - (int)(numberOfSteps * (angle / 1.5708))));
 		return ((int)(layerHeight * 1000)) / 1000.0;
 	}
+	
+	/**
+	 * Loop through a set of ranges and check if the end of the current one matches the start of the next. For example [0-10] next to [12-15] is invalid.
+	 * 
+	 * @param ranges The ranges to validate  
+	 */
 	private static void validateRanges(ArrayList<Range> ranges){
 		for(int i = 0; i < ranges.size() - 1; i++){
 			if(ranges.get(i).end != ranges.get(i + 1).start){
@@ -325,5 +343,24 @@ public class VariSlic3 {
 				System.exit(-1);
 			}
 		}
+	}
+	
+	/**
+	 * Prints all the ranges in order
+	 * 
+	 * @param ranges
+	 */
+	private static void printRanges(ArrayList<Range> ranges) {
+		for(Range trange : ranges){
+				System.out.print("["+trange.start+"("+trange.layerHeight+")"+trange.end+"]");
+		}
+		System.out.println();
+	}
+	/**
+	 * Checks if the program was run from eclipse or a console
+	 * @return
+	 */
+	private static boolean inConsole(){
+		return System.console() != null;
 	}
 }
