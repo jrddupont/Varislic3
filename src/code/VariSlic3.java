@@ -263,8 +263,8 @@ public class VariSlic3 {
 			}
 			// Didn't find range to start on.
 			System.out.println();
-			printRanges(ranges);
-			System.out.println(newRange);
+			//printRanges(ranges);
+			//System.out.println(newRange);
 			System.out.println("Critical error, please send me the STL you tried to proccess. 0x1");
 			return;
 		}
