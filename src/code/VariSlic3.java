@@ -67,7 +67,7 @@ public class VariSlic3 {
 				printHelp();
 			}
  		}else{	// If this is run from eclipse. For testing purposes
-			file = new File("bulb.stl");
+			file = new File("3DBenchy.stl");
 			considerNegatives = true;
 			minLayerHeight = 0.1;
 			maxLayerHeight = 0.3;
@@ -124,6 +124,10 @@ public class VariSlic3 {
 			double decimals = 100;	// No need to be very accurate so we make the numbers have less precision
 			maxHeight = (int)((maxHeight * decimals)) / decimals;
 			minHeight = (int)((minHeight * decimals)) / decimals;
+			
+			if(minHeight == maxHeight){	// If this triangle is flat, simply continue
+				continue;
+			}
 			
 			if(minHeight < 0){ // If the stl drops below 0, there are problems
 				continue;
@@ -212,7 +216,7 @@ public class VariSlic3 {
 						}
 						
 						if(newRange.getSize() == 0){	// If after the clipping is over the new range is size 0, continue
-							continue;
+							continue outer;
 						}
 						
 						ranges.add(startIndex + 1, newRange);	// Add the new range after the startrange
@@ -258,6 +262,9 @@ public class VariSlic3 {
 				}
 			}
 			// Didn't find range to start on.
+			System.out.println();
+			printRanges(ranges);
+			System.out.println(newRange);
 			System.out.println("Critical error, please send me the STL you tried to proccess. 0x1");
 			return;
 		}
@@ -277,6 +284,9 @@ public class VariSlic3 {
 			}
 		}
 		System.out.println(" to " + ranges.size());
+		System.out.println("Validating ranges...");
+		validateRanges(ranges);
+		System.out.println("Ranges validated.");
 		saveRanges(ranges);	// Save the table
 		System.out.println("Table saved to 'output.txt'");
 	}
@@ -366,6 +376,7 @@ public class VariSlic3 {
 				System.out.println();
 				printRanges(ranges);
 				System.out.println("Error in validating ranges: " + ranges.get(i) + " " + ranges.get(i + 1));
+				System.out.println("Please report this if it happens.");
 				System.exit(-1);
 			}
 		}
